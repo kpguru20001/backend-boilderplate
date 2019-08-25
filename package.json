@@ -1,0 +1,34 @@
+{
+  "name": "osvia-backend",
+  "version": "1.0.0",
+  "description": "this is backend for osvia",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon --exec node src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/DarcruX/osvia-backend.git"
+  },
+  "keywords": [
+    "Osvia",
+    "drones"
+  ],
+  "author": "OSVIA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/DarcruX/osvia-backend/issues"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.8.1",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "graphql": "^14.4.2",
+    "mongoose": "^5.6.9"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "homepage": "https://flycamp.org"
+}
