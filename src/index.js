@@ -1,5 +1,6 @@
 //Modules imported
 const { ApolloServer } = require('apollo-server-express');
+const jwt = require('jsonwebtoken');
 
 //middleware
 const express = require('express');
@@ -17,14 +18,31 @@ const { resolvers } = require('./resolvers');
 //config for database connections
 require('./config');
 
+const SECRET = 'secret';
 //create apollo server
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
-	context: {
-		DB
+	context:  ({ req }) => {
+		// get the user token from the headers
+		const token = req.headers.authorization || '';
+		//verify jwt
+		try{
+			const { user } =  jwt.verify(token, SECRET);
+			console.log(user._id);
+			// return DB and user in context
+			return { user, DB };
+		}
+		catch(err){
+			console.log(err.message);
+		}
+	
+
+		// add only the DB to the context
+		return { DB };
 	}
 });
+
 //create express
 const app = express();
 //add middleware

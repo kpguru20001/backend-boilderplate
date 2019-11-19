@@ -2,7 +2,7 @@ const { gql } = require('apollo-server-express');
 
 const query = gql`
   type Query {
-    getUser(token: String!) : User!,
+    getUser : User!,
     getUsers: [User]
   }
 `;

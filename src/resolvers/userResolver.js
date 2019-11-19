@@ -1,9 +1,15 @@
+const { AuthenticationError } = require('apollo-server-express');
+
 const userResolver = {
 	Query: {
-		async getUser(root, args, { DB }) {
-			const { token } = args;
-			const user = await DB.User.auth(token);
-			user.id = user._id;
+		async getUser(root, args, { user }) {
+			if (user === undefined) {
+				throw new AuthenticationError('You must be logged in');
+			}
+			// returning new project
+			else {
+				return user;
+			}
 			return user;
 		},
 		getUsers: async (root, args, { DB }) => await DB.User.find({}).exec()

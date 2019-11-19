@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -20,17 +20,21 @@ const userSchema = new Schema({
 	},
 	password: {
 		type: String,
-		required: true,
+		required: true
 	},
 	createdAt: {
 		type: Date,
-		default: Date.now,
+		default: Date.now
 	},
+	projectID: {
+		type: [String],
+		default: []
+	}
 });
 // user methods
 userSchema.statics.createUser = async (email, username, password) => {
 	// make new instance of user
-	const user = await new User({email, username, password});
+	const user = await new User({ email, username, password });
 	// hash user password then return the user
 	user.password = await bcryptjs.hash(user.password, 10);
 	return user.save();
@@ -38,7 +42,7 @@ userSchema.statics.createUser = async (email, username, password) => {
 
 userSchema.statics.login = async (email, password) => {
 	// check if user exits
-	const user = await User.findOne({email});
+	const user = await User.findOne({ email });
 	if (!user) {
 		throw new Error('user not found');
 	}
@@ -50,25 +54,14 @@ userSchema.statics.login = async (email, password) => {
 	// assign the user a token
 	const token = jwt.sign(
 		{
-			user,
+			user
 		},
 		SECRET,
 		{
-			expiresIn: '2d',
+			expiresIn: '2d'
 		}
 	);
 	return token;
-};
-//authentication strategy for users
-userSchema.statics.auth = async (token) => {
-	try {
-		//verify jwt
-		const {user} = await jwt.verify(token, SECRET);
-		// assign the user to req.user
-		return user;
-	} catch (err) {
-		console.log(err);
-	}
 };
 
 const User = mongoose.model('User', userSchema);
