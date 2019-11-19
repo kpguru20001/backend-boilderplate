@@ -1,11 +1,12 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require('apollo-server-express');
 
 const mutation = gql`
   type Mutation {
-    addUser(userName: String!, email: String!, phoneNumber: String!): User
+    createUser(email: String!, username: String!, password: String!): User!
+    login(email: String!, password: String!): String!
   }
 `;
 
 module.exports = {
-  mutation
+	mutation
 };

@@ -1,21 +1,27 @@
-const { User } = require("../models");
-
 const userResolver = {
-  Query: {
-    getUsers: async () => await User.find({}).exec()
-  },
-  Mutation: {
-    addUser: async (_, args) => {
-      try {
-        let response = await User.create(args);
-        return response;
-      } catch (e) {
-        return e.message;
-      }
-    }
-  }
+	Query: {
+		async getUser(root, args, { DB }) {
+			const { token } = args;
+			const user = await DB.User.auth(token);
+			user.id = user._id;
+			return user;
+		},
+		getUsers: async (root, args, { DB }) => await DB.User.find({}).exec()
+	},
+	Mutation: {
+		async createUser(root, args, { DB }) {
+			const { username, email, password } = args;
+			const user = await DB.User.createUser(email, username, password);
+			return user;
+		},
+		async login(root, args, { DB }) {
+			const { email, password } = args;
+			const user = await DB.User.login(email, password);
+			return user;
+		}
+	}
 };
 
 module.exports = {
-  userResolver
+	userResolver
 };

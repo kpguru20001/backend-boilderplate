@@ -1,14 +1,15 @@
-const { gql } = require("apollo-server-express");
+const {gql} = require('apollo-server-express');
 
 const user = gql`
   type User {
     id: ID!
-    userName: String
-    email: String
-    phoneNumber: String
+    email: String!
+    username: String!
+    password: String!
+    createAt: String!
   }
 `;
 
 module.exports = {
-  user
+	user,
 };
