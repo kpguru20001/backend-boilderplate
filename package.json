@@ -21,7 +21,7 @@
     "url": "https://gitlab.com/DarcruX/osvia-backend/issues"
   },
   "dependencies": {
-    "apollo-server-express": "^2.8.1",
+    "apollo-server-express": "^2.14.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
